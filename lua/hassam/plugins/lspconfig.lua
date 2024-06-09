@@ -17,9 +17,23 @@ return { -- LSP Configuration & Plugins
   config = function()
     local lspconfig = require 'lspconfig'
 
-    lspconfig.emmet_language_server.setup {
+    lspconfig.emmet_ls.setup {
       filetypes = { 'css', 'eruby', 'html', 'javascript', 'javascriptreact', 'less', 'sass', 'scss', 'pug', 'typescriptreact', 'eex', 'heex' },
     }
+
+    -- lspconfig.prettier.setup {
+    --   bin = 'prettier',
+    --   filetypes = {
+    --     'css',
+    --     'javascript',
+    --     'javascriptreact',
+    --     'typescript',
+    --     'typescriptreact',
+    --     'json',
+    --     'scss',
+    --     'less',
+    --   },
+    -- }
 
     vim.api.nvim_create_autocmd('LspAttach', {
       group = vim.api.nvim_create_augroup('kickstart-lsp-attach', { clear = true }),
@@ -137,9 +151,12 @@ return { -- LSP Configuration & Plugins
       --    https://github.com/pmizio/typescript-tools.nvim
       --
       -- But for many setups, the LSP (`tsserver`) will work just fine
-      -- tsserver = {},
-      --
-
+      tsserver = {},
+      html = {},
+      cssls = {},
+      tailwindcss = {},
+      emmet_ls = {},
+      lexical = {},
       lua_ls = {
         -- cmd = {...},
         -- filetypes = { ...},
@@ -169,6 +186,7 @@ return { -- LSP Configuration & Plugins
     local ensure_installed = vim.tbl_keys(servers or {})
     vim.list_extend(ensure_installed, {
       'stylua', -- Used to format Lua code
+      'prettier',
     })
     require('mason-tool-installer').setup { ensure_installed = ensure_installed }
 
